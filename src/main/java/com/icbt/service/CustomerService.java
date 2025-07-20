@@ -53,4 +53,12 @@ public class CustomerService {
     public boolean customerExists(String accountNumber) {
         return customerDAO.customerExists(accountNumber);
     }
+
+    public boolean checkCustomer(int id){
+        return customerDAO.checkCustomer(id);
+    }
+
+    public Customer getCustomerById(int id) {
+        return customerDAO.getCustomerById(id);
+    }
 }

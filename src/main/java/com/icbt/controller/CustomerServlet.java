@@ -2,6 +2,7 @@ package com.icbt.controller;
 
 import com.icbt.model.Customer;
 import com.icbt.service.CustomerService;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/customer")
 public class CustomerServlet extends HttpServlet {
@@ -24,34 +26,59 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String accountNumber = req.getParameter("accountNumber");
-        Customer customer = customerService.getCustomer(accountNumber);
 
-        if (customer != null) {
-            resp.setContentType("text/plain");
-            resp.getWriter().write(customer.toString());
-        } else {
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Customer not found");
+        String action = req.getParameter("action");
+        if (action == null) {
+
+
+            List<Customer> customerList = customerService.getAllCustomers();
+            req.setAttribute("customers", customerList);
+
+            // Use forward, NOT redirect
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/list_customer.jsp");
+            dispatcher.forward(req, resp);
+        }
+        else{
+            if(action.equals("edit")){
+                int id = Integer.parseInt(req.getParameter("id"));
+                Customer customer = customerService.getCustomerById(id);
+                req.setAttribute("customer", customer);
+                req.getRequestDispatcher("edit_customer.jsp").forward(req, resp);
+            }
+            else if(action.equals("delete")){
+                doDelete(req, resp);
+                resp.sendRedirect("customer");
+            }
         }
     }
+
 
     // POST - Add new customer
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String accountNumber = req.getParameter("accountNumber");
-        String name = req.getParameter("name");
-        String address = req.getParameter("address");
-        String telephone = req.getParameter("telephone");
 
-        Customer customer = new Customer(accountNumber, name, address, telephone);
-        boolean added = customerService.addCustomer(customer);
+        String action = req.getParameter("action");
+        if (action == null) {
+            String accountNumber = req.getParameter("accountNumber");
+            String name = req.getParameter("name");
+            String address = req.getParameter("address");
+            String telephone = req.getParameter("telephone");
 
-        if (added) {
-            resp.setStatus(HttpServletResponse.SC_CREATED);
-            resp.getWriter().write("Customer added successfully");
-        } else {
-            resp.sendError(HttpServletResponse.SC_CONFLICT, "Customer already exists");
+            Customer customer = new Customer(accountNumber, name, address, telephone);
+            boolean added = customerService.addCustomer(customer);
+
+            if (added) {
+                resp.setStatus(HttpServletResponse.SC_CREATED);
+                resp.getWriter().write("Customer added successfully");
+                resp.sendRedirect(req.getContextPath() + "/list_customer.jsp");
+            } else {
+                resp.sendError(HttpServletResponse.SC_CONFLICT, "Customer already exists");
+            }
+        }else{
+            if(action.equals("update")){
+                doPut(req, resp);
+            }
         }
     }
 
@@ -59,34 +86,20 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        StringBuilder json = new StringBuilder();
-        BufferedReader reader = req.getReader();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            json.append(line);
-        }
-
-        // For simplicity, manually parsing input (assumes format: key=value&key=value)
-        String[] params = json.toString().split("&");
-        String accountNumber = "", name = "", address = "", telephone = "";
-
-        for (String param : params) {
-            String[] pair = param.split("=");
-            if (pair.length == 2) {
-                switch (pair[0]) {
-                    case "accountNumber" -> accountNumber = pair[1];
-                    case "name" -> name = pair[1];
-                    case "address" -> address = pair[1];
-                    case "telephone" -> telephone = pair[1];
-                }
-            }
-        }
+        String accountNumber = req.getParameter("accountNumber");
+        String name = req.getParameter("name");
+        String address = req.getParameter("address");
+        String telephone = req.getParameter("telephone");
 
         Customer updatedCustomer = new Customer(accountNumber, name, address, telephone);
+        System.out.println(updatedCustomer.getAccountNumber());
+        System.out.println(updatedCustomer.getName());
+        System.out.println(updatedCustomer.getAddress());
+        System.out.println(updatedCustomer.getTelephone());
         boolean updated = customerService.updateCustomer(updatedCustomer);
 
         if (updated) {
-            resp.getWriter().write("Customer updated successfully");
+            resp.sendRedirect("customer");
         } else {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Customer not found");
         }
@@ -96,11 +109,12 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String accountNumber = req.getParameter("accountNumber");
-        boolean exists = customerService.customerExists(accountNumber);
+        String id = req.getParameter("id");
+        boolean exists = customerService.checkCustomer(Integer.parseInt(id));
 
         if (exists) {
-            customerService.deleteCustomer(accountNumber);
+            Customer customer = customerService.getCustomerById(Integer.parseInt(id));
+            customerService.deleteCustomer(customer.getAccountNumber());
             resp.getWriter().write("Customer deleted successfully");
         } else {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Customer not found");

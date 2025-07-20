@@ -1,54 +1,108 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: isuri
-  Date: 7/19/2025
-  Time: 2:38 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="com.icbt.model.Customer" %>
+<%@ page session="true" %>
 <%
     Customer customer = (Customer) request.getAttribute("customer");
+    if (customer == null) {
+        response.sendRedirect("list_customer.jsp");
+        return;
+    }
 %>
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Edit Customer</title>
     <style>
-        body { font-family: Arial; margin: 20px; }
-        form { max-width: 400px; }
-        label { display: block; margin-top: 10px; }
-        input[type="text"], input[type="email"] {
-            width: 100%; padding: 8px; box-sizing: border-box;
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f3;
+            margin: 0;
+            padding: 0;
         }
-        input[type="submit"] {
-            margin-top: 15px;
-            background-color: #ffc107;
-            color: black; border: none; padding: 10px 15px;
+
+        .container {
+            max-width: 600px;
+            margin: 80px auto;
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 4px;
             cursor: pointer;
+            font-size: 15px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .back-link {
+            margin-top: 15px;
+            display: block;
+            text-align: center;
+        }
+
+        .back-link a {
+            color: #555;
+            text-decoration: none;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-<h2>Edit Customer</h2>
-<form action="customer?action=update" method="post">
-    <input type="hidden" name="id" value="<%= customer.getId() %>" />
+<div class="container">
+    <h2>Edit Customer</h2>
+    <form action="customer?action=update" method="post">
+        <input type="hidden" name="accountNumber" value="<%= customer.getAccountNumber() %>" />
 
-    <label>Name:</label>
-    <input type="text" name="name" value="<%= customer.getName() %>" required />
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="<%= customer.getName() %>" required>
 
-    <label>Email:</label>
-    <input type="email" name="email" value="<%= customer.getEmail() %>" required />
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address" value="<%= customer.getAddress() %>" required>
 
-    <label>Phone:</label>
-    <input type="text" name="phone" value="<%= customer.getPhone() %>" required />
+        <label for="telephone">Telephone:</label>
+        <input type="tel" id="telephone" name="telephone" value="<%= customer.getTelephone() %>" required>
 
-    <label>Account Number:</label>
-    <input type="text" name="accountNumber" value="<%= customer.getAccountNumber() %>" required />
+        <button type="submit" class="btn">Update Customer</button>
+    </form>
 
-    <input type="submit" value="Update Customer" />
-</form>
+    <div class="back-link">
+        <a href="list_customer.jsp">← Back to Customer List</a>
+    </div>
+</div>
 </body>
 </html>
-

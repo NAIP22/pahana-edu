@@ -39,12 +39,16 @@ public class CustomerDAO {
              PreparedStatement stmt = con.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                customers.add(new Customer(
-                        rs.getString("account_number"),
-                        rs.getString("name"),
-                        rs.getString("address"),
-                        rs.getString("telephone")
-                ));
+
+                Customer customer = new Customer();
+                customer.setId(rs.getInt("id"));
+                customer.setAccountNumber(rs.getString("account_number"));
+                customer.setName(rs.getString("name"));
+                customer.setAddress(rs.getString("address"));
+                customer.setTelephone(rs.getString("telephone"));
+
+                customers.add(customer);
+
             }
         } catch (SQLException ex) {
             System.err.println("getAllCustomers Error: " + ex.getMessage());
@@ -112,5 +116,41 @@ public class CustomerDAO {
             System.err.println("customerExists Error: " + ex.getMessage());
         }
         return false;
+    }
+
+    public boolean checkCustomer(int id){
+        String sql = "SELECT * FROM customers WHERE id = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException ex) {
+            System.err.println("customerExists Error: " + ex.getMessage());
+        }
+        return false;
+    }
+
+    public Customer getCustomerById(int id){
+        String sql = "SELECT * FROM customers WHERE id = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Customer(
+                            rs.getInt("id"),
+                            rs.getString("account_number"),
+                            rs.getString("name"),
+                            rs.getString("address"),
+                            rs.getString("telephone")
+                    );
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println("getCustomerByAccountNumber Error: " + ex.getMessage());
+        }
+        return null;
     }
 }
