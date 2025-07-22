@@ -4,10 +4,13 @@ package com.icbt.controller;
 import com.icbt.model.Item;
 import com.icbt.service.ItemService;
 import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
+
+@WebServlet("/item")
 public class ItemServlet extends HttpServlet {
     private final ItemService itemService = new ItemService();
 

@@ -31,20 +31,23 @@
     .dashboard h2 {
       color: #333;
       margin-bottom: 20px;
+      text-align: center;
     }
 
     .buttons {
-      margin-top: 20px;
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
     .buttons a {
-      display: inline-block;
-      margin-right: 10px;
-      padding: 10px 20px;
+      text-align: center;
+      padding: 12px;
       background-color: #007bff;
       color: white;
       text-decoration: none;
-      border-radius: 5px;
+      border-radius: 6px;
       transition: background-color 0.3s;
     }
 
@@ -54,11 +57,13 @@
 
     .logout {
       margin-top: 30px;
+      text-align: center;
     }
 
     .logout a {
       color: #dc3545;
       text-decoration: none;
+      font-weight: bold;
     }
 
     .logout a:hover {
@@ -69,9 +74,15 @@
 <body>
 <div class="dashboard">
   <h2>Welcome, <%= user.getUsername() %>!</h2>
-  <p>You have successfully logged into the dashboard.</p>
+  <p style="text-align:center;">You have successfully logged into the dashboard.</p>
 
   <div class="buttons">
+    <!-- Item Links -->
+    <a href="item?action=add">Add Item</a>
+    <a href="item?action=list">View Items</a>
+    <!-- Edit Item would typically be from list view per item, so not linked directly -->
+
+    <!-- Customer Links -->
     <a href="add_customer.jsp">Add Customer</a>
     <a href="customer">View Customers</a>
   </div>
