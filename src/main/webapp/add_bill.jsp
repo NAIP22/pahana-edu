@@ -92,10 +92,72 @@
         }
     </style>
 </head>
+<script>
+    function addItem() {
+        const container = document.getElementById("item-container");
+        const firstLine = container.firstElementChild;
+        const clone = firstLine.cloneNode(true);
+
+        // Clear selected values
+        const selects = clone.getElementsByTagName("select");
+        const inputs = clone.getElementsByTagName("input");
+
+        if (selects.length) selects[0].selectedIndex = 0;
+        if (inputs.length) inputs[0].value = 1;
+
+        container.appendChild(clone);
+        attachEvents(); // Reattach events to new fields
+    }
+
+    function calculateTotal() {
+        let total = 0;
+        const lines = document.querySelectorAll(".line-item");
+
+        lines.forEach(line => {
+            const select = line.querySelector("select");
+            const quantityInput = line.querySelector("input[name='quantity[]']");
+            const unitPriceInput = line.querySelector("input[name='unitPrice[]']");
+
+            const selectedOption = select.options[select.selectedIndex];
+            const unitPrice = parseFloat(selectedOption.getAttribute("data-price")) || 0;
+            const quantity = parseInt(quantityInput.value) || 0;
+
+            const lineTotal = unitPrice * quantity;
+            total += lineTotal;
+
+            // update hidden unit price field
+            unitPriceInput.value = unitPrice;
+        });
+
+        document.getElementById("totalAmount").innerText = total.toFixed(2);
+    }
+
+    function attachEvents() {
+        const selects = document.querySelectorAll(".line-item select");
+        const qtyInputs = document.querySelectorAll(".line-item input[type='number']");
+
+        selects.forEach(select => {
+            select.onchange = calculateTotal;
+        });
+
+        qtyInputs.forEach(input => {
+            input.oninput = calculateTotal;
+        });
+    }
+
+    // Initial binding
+    attachEvents();
+</script>
+
 <body>
 <div class="container">
     <h2>Create New Bill</h2>
     <form action="bill" method="post">
+        <!-- Inside your <form> tag, just after the item input blocks -->
+        <div id="total-container" style="text-align:right; font-weight: bold; margin-top: 20px;">
+            Total: Rs. <span id="totalAmount">0.00</span>
+        </div>
+
         <label for="customerId">Select Customer:</label>
         <select name="customerId" required>
             <option value="">-- Select --</option>
@@ -112,12 +174,15 @@
                 <select name="itemId[]" required>
                     <option value="">-- Select Item --</option>
                     <% for (Item item : items) { %>
-                    <option value="<%= item.getId() %>">
+                    <option value="<%= item.getId() %>" data-price="<%= item.getUnitPrice() %>">
                         <%= item.getName() %> (Rs. <%= item.getUnitPrice() %>)
                     </option>
                     <% } %>
                 </select>
                 <input type="number" name="quantity[]" placeholder="Qty" min="1" value="1" required />
+
+                <input type="hidden" name="unitPrice[]" value="0" />
+
             </div>
         </div>
 
@@ -142,10 +207,22 @@
         const inputs = clone.getElementsByTagName("input");
 
         if (selects.length) selects[0].selectedIndex = 0;
-        if (inputs.length) inputs[0].value = 1;
+        if (inputs.length) {
+            for (let input of inputs) {
+                if (input.type === "number") input.value = 1;
+                if (input.type === "hidden") input.value = 0;
+            }
+        }
 
         container.appendChild(clone);
+        attachEvents(); // Re-bind events on new fields
     }
+
 </script>
+
+<script>
+    window.onload = attachEvents;
+</script>
+
 </body>
 </html>
