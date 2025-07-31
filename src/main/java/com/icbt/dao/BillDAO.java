@@ -70,4 +70,36 @@ public class BillDAO {
         }
         return bills;
     }
+
+    public boolean deleteBill(int id) {
+        String sql = "DELETE FROM bills WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setInt(1, id);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Bill getBillById(int id) {
+        String sql = "SELECT * FROM bills WHERE id = ?";
+        try ( Connection conn = DBConnection.getConnection();
+        PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try ( ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Bill bill = new Bill();
+                    bill.setId(rs.getInt("id"));
+                    bill.setCustomerId(rs.getInt("customer_id"));
+                    bill.setBillDate(rs.getDate("bill_date"));
+                    bill.setTotalAmount(rs.getDouble("total_amount"));
+                    return bill;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 }

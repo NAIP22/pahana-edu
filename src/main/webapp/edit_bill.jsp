@@ -108,9 +108,9 @@
         %>
         <div class="line-item">
             <label><%= item.getName() %> - Rs. <%= item.getUnitPrice() %></label>
-            <input type="hidden" name="itemId" value="<%= item.getId() %>">
-            <input type="number" name="quantity" placeholder="Qty" min="0" value="<%= qty %>">
-            <input type="hidden" name="unitPrice" value="<%= price %>">
+            <input type="hidden" name="itemIds[]" value="<%= item.getId() %>">
+            <input type="number" name="quantities[]" placeholder="Qty" min="0" value="<%= qty %>">
+            <input type="hidden" name="unitPrices[]" value="<%= price %>">
         </div>
         <%
             }

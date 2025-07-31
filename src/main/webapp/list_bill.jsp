@@ -1,4 +1,5 @@
 <%@ page import="java.util.*, com.icbt.model.Bill" %>
+<%@ page import="com.icbt.model.BillItem" %>
 <%
     List<Bill> bills = (List<Bill>) request.getAttribute("bills");
 %>
@@ -13,7 +14,7 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 40px auto;
             background: #fff;
             padding: 30px;
@@ -59,18 +60,19 @@
             background-color: #dc3545;
         }
 
-        .print-btn {
-            background-color: #28a745;
-        }
-
-        .back {
-            margin-top: 20px;
+        .back-btn {
+            background-color: #6c757d;
+            display: inline-block;
             text-align: center;
+            margin-top: 10px;
+            text-decoration: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
         }
 
-        .back a {
-            text-decoration: none;
-            color: #007bff;
+        .back-btn:hover {
+            background-color: #5a6268;
         }
     </style>
 </head>
@@ -80,12 +82,14 @@
 
     <table>
         <tr>
-            <th>ID</th>
-            <th>Customer ID</th>
+            <th>Bill ID</th>
+            <th>Customer Name</th>
+            <th>Item(s)</th>
             <th>Date</th>
             <th>Total Amount (Rs.)</th>
             <th>Actions</th>
         </tr>
+
         <%
             if (bills != null && !bills.isEmpty()) {
                 for (Bill bill : bills) {
@@ -93,12 +97,18 @@
         <tr>
             <td><%= bill.getId() %></td>
             <td><%= bill.getCustomerId() %></td>
+            <td>
+                <ul style="margin:0; padding-left: 15px; text-align: left;">
+                    <% for (BillItem item : bill.getItems()) { %>
+                    <li><%= item.getItemId() %></li>
+                    <% } %>
+                </ul>
+            </td>
             <td><%= bill.getBillDate() %></td>
             <td><%= bill.getTotalAmount() %></td>
             <td>
                 <a class="btn edit-btn" href="bill?action=edit&id=<%= bill.getId() %>">Edit</a>
                 <a class="btn delete-btn" href="bill?action=delete&id=<%= bill.getId() %>" onclick="return confirm('Are you sure you want to delete this bill?')">Delete</a>
-                <a class="btn print-btn" href="view_bill.jsp?id=<%= bill.getId() %>" target="_blank">Print</a>
             </td>
         </tr>
         <%
@@ -106,16 +116,15 @@
         } else {
         %>
         <tr>
-            <td colspan="5">No bills found.</td>
+            <td colspan="6">No bills found.</td>
         </tr>
         <%
             }
         %>
     </table>
 
-    <div class="back">
-        <a href="dashboard.jsp">← Back to Dashboard</a>
-    </div>
+    <br/>
+    <a href="dashboard.jsp" class="back-btn">← Back to Dashboard</a>
 </div>
 </body>
 </html>
