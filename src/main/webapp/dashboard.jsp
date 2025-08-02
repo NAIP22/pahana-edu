@@ -108,6 +108,7 @@
     <a href="bill">View Bills</a>
     <a href="bill?action=edit&id=1" class="edit">Edit Bill</a>
     <a href="bill?action=delete&id=1" class="delete" onclick="return confirm('Are you sure you want to delete this bill?')">Delete Bill</a>
+    <a href="help_section.jsp">Help Section</a>
   </div>
 
   <div class="logout">
