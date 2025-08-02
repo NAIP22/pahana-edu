@@ -10,53 +10,71 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>Dashboard</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f3f3f3;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #f8f9fa, #e0e0e0);
       margin: 0;
       padding: 0;
     }
 
     .dashboard {
-      max-width: 600px;
-      margin: 80px auto;
-      padding: 30px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 40px;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     .dashboard h2 {
-      color: #333;
-      margin-bottom: 20px;
+      color: #343a40;
+      margin-bottom: 10px;
       text-align: center;
+    }
+
+    .dashboard p {
+      text-align: center;
+      color: #666;
     }
 
     .buttons {
-      margin-top: 30px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
     }
 
     .buttons a {
-      text-align: center;
-      padding: 12px;
+      display: block;
+      padding: 14px;
       background-color: #007bff;
-      color: white;
+      color: #fff;
       text-decoration: none;
-      border-radius: 6px;
-      transition: background-color 0.3s;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 500;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .buttons a.edit {
+      background-color: #007bff;
+      color: #000;
+    }
+
+    .buttons a.delete {
+      background-color: #007bff;
     }
 
     .buttons a:hover {
-      background-color: #0056b3;
+      transform: translateY(-2px);
+      opacity: 0.9;
     }
 
     .logout {
-      margin-top: 30px;
+      margin-top: 40px;
       text-align: center;
     }
 
@@ -74,17 +92,22 @@
 <body>
 <div class="dashboard">
   <h2>Welcome, <%= user.getUsername() %>!</h2>
-  <p style="text-align:center;">You have successfully logged into the dashboard.</p>
+  <p>You have successfully logged into the system dashboard.</p>
 
   <div class="buttons">
-    <!-- Item Links -->
-    <a href="item?action=add">Add Item</a>
-    <a href="item?action=list">View Items</a>
-    <!-- Edit Item would typically be from list view per item, so not linked directly -->
-
-    <!-- Customer Links -->
+    <!-- Customer Actions -->
     <a href="add_customer.jsp">Add Customer</a>
     <a href="customer">View Customers</a>
+
+    <!-- Item Actions -->
+    <a href="item?action=add">Add Item</a>
+    <a href="item?action=list">View Items</a>
+
+    <!-- Billing Actions -->
+    <a href="bill?action=create">Create Bill</a>
+    <a href="bill">View Bills</a>
+    <a href="bill?action=edit&id=1" class="edit">Edit Bill</a>
+    <a href="bill?action=delete&id=1" class="delete" onclick="return confirm('Are you sure you want to delete this bill?')">Delete Bill</a>
   </div>
 
   <div class="logout">
