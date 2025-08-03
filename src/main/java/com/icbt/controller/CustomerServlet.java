@@ -35,11 +35,14 @@ public class CustomerServlet extends HttpServlet {
             req.setAttribute("customers", customerList);
 
             // Use forward, NOT redirect
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/list_customer.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("list_customer.jsp");
             dispatcher.forward(req, resp);
         }
         else{
-            if(action.equals("edit")){
+            if(action.equals("add")){
+                req.getRequestDispatcher("add_customer.jsp").forward(req, resp);
+            }
+            else if(action.equals("edit")){
                 int id = Integer.parseInt(req.getParameter("id"));
                 Customer customer = customerService.getCustomerById(id);
                 req.setAttribute("customer", customer);

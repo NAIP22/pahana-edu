@@ -28,7 +28,8 @@
 <body>
 <h2 style="text-align:center;">Item List</h2>
 <div class="add-btn">
-    <a href="item?action=add" class="button">+ Add New Item</a>
+    <a href="item?action=add" class="button">+ Add New Item</a><br><br>
+    <a href="dashboard" class="button"> Back to Dashboard</a>
 </div>
 <table>
     <tr>
