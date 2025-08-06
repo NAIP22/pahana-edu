@@ -99,6 +99,7 @@
     <a href="customer?action=add">Add Customer</a>
     <a href="customer">View Customers</a>
 
+
     <!-- Item Actions -->
     <a href="item?action=add">Add Item</a>
     <a href="item?action=list">View Items</a>
@@ -106,7 +107,9 @@
     <!-- Billing Actions -->
     <a href="bill?action=create">Create Bill</a>
     <a href="bill">View Bills</a>
+    <a href="customer?action=search">Account Details</a>
     <a href="help">Help Section</a>
+
   </div>
 
   <div class="logout">

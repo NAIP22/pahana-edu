@@ -48,9 +48,16 @@ public class CustomerServlet extends HttpServlet {
                 req.setAttribute("customer", customer);
                 req.getRequestDispatcher("edit_customer.jsp").forward(req, resp);
             }
-            else if(action.equals("delete")){
+            else if(action.equals("delete")) {
                 doDelete(req, resp);
                 resp.sendRedirect("customer");
+            } else if (action.equals("search")){
+                    req.getRequestDispatcher("account_detail.jsp").forward(req, resp);
+            } else if (action.equals(("searched"))) {
+                String accountNumber = req.getParameter("accountNumber");
+                Customer customer = customerService.getCustomer(accountNumber);
+                req.setAttribute("customer", customer);
+                req.getRequestDispatcher("account_detail.jsp").forward(req,resp);
             }
         }
     }
