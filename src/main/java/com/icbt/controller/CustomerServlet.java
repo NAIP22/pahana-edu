@@ -69,24 +69,24 @@ public class CustomerServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String action = req.getParameter("action");
-        if (action == null) {
-            String accountNumber = req.getParameter("accountNumber");
-            String name = req.getParameter("name");
-            String address = req.getParameter("address");
-            String telephone = req.getParameter("telephone");
+        if (action != null) {
+            if (action.equals("add")) {
+                String accountNumber = req.getParameter("accountNumber");
+                String name = req.getParameter("name");
+                String address = req.getParameter("address");
+                String telephone = req.getParameter("telephone");
 
-            Customer customer = new Customer(accountNumber, name, address, telephone);
-            boolean added = customerService.addCustomer(customer);
+                Customer customer = new Customer(accountNumber, name, address, telephone);
+                boolean added = customerService.addCustomer(customer);
 
-            if (added) {
-                resp.setStatus(HttpServletResponse.SC_CREATED);
-                resp.getWriter().write("Customer added successfully");
-                resp.sendRedirect(req.getContextPath() + "/list_customer.jsp");
-            } else {
-                resp.sendError(HttpServletResponse.SC_CONFLICT, "Customer already exists");
-            }
-        }else{
-            if(action.equals("update")){
+                if (added) {
+                    resp.setStatus(HttpServletResponse.SC_CREATED);
+                    resp.getWriter().write("Customer added successfully");
+                    resp.sendRedirect("customer");
+                } else {
+                    resp.sendError(HttpServletResponse.SC_CONFLICT, "Customer already exists");
+                }
+            } else if (action.equals("update")) {
                 doPut(req, resp);
             }
         }
