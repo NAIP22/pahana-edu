@@ -1,7 +1,11 @@
 <%@ page import="java.util.*, com.icbt.model.Bill" %>
 <%@ page import="com.icbt.model.BillItem" %>
+<%@ page import="com.icbt.model.Customer" %>
+<%@ page import="com.icbt.model.Item" %>
 <%
     List<Bill> bills = (List<Bill>) request.getAttribute("bills");
+    List<Customer> customers = (List<Customer>) request.getAttribute("customers");
+    List<Item> items = (List<Item>) request.getAttribute("items");
 %>
 <!DOCTYPE html>
 <html>
@@ -96,12 +100,25 @@
         %>
         <tr>
             <td><%= bill.getId() %></td>
-            <td><%= bill.getCustomerId() %></td>
+            <%
+            for (Customer customer: customers){
+                if(bill.getCustomerId() == customer.getId()){
+                    %>
+            <td><%= customer.getName() %></td>
+            <%
+                }
+            }
+            %>
             <td>
                 <ul style="margin:0; padding-left: 15px; text-align: left;">
-                    <% for (BillItem item : bill.getItems()) { %>
-                    <li><%= item.getItemId() %></li>
-                    <% } %>
+                    <% for (BillItem item : bill.getItems()) {
+                    for (Item i: items){
+                        if(item.getItemId() == i.getId()){
+                    %>
+                    <li><%= i.getName() + " - " +  item.getQuantity()%></li>
+                    <% }
+                    }
+                    } %>
                 </ul>
             </td>
             <td><%= bill.getBillDate() %></td>

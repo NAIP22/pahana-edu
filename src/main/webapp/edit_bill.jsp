@@ -21,85 +21,124 @@
     <title>Edit Bill</title>
     <style>
         body {
-            font-family: Arial;
-            background: #f4f4f4;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+            background-color: #f9fafc;
+            margin: 0;
+            padding: 0;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 40px auto;
             background: #fff;
             padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            color: #333;
         }
 
         label {
-            font-weight: bold;
+            font-weight: 600;
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            color: #444;
         }
 
         select, input[type="number"] {
             width: 100%;
-            padding: 8px;
+            padding: 8px 10px;
             margin-bottom: 15px;
-            border-radius: 4px;
+            border-radius: 6px;
             border: 1px solid #ccc;
+            transition: border-color 0.3s ease;
+        }
+
+        select:focus, input[type="number"]:focus {
+            border-color: #0766ff;
+            outline: none;
         }
 
         .line-item {
-            margin-bottom: 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 10px;
+            align-items: center;
+            padding: 12px;
+            background-color: #f6f8fa;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .item-name {
+            font-size: 15px;
+            font-weight: 500;
         }
 
         .btn {
             background-color: #0766ff;
-            color: #333;
-            padding: 10px 16px;
+            color: #fff;
+            padding: 10px 18px;
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 15px;
+            display: inline-block;
         }
 
         .btn:hover {
-            background-color: #0766ff;
+            background-color: #0556d4;
         }
 
         .back {
             margin-top: 20px;
+            text-align: center;
         }
 
         .back a {
             text-decoration: none;
-            color: #007bff;
+            color: #0766ff;
+            font-weight: 500;
+        }
+
+        .back a:hover {
+            text-decoration: underline;
+        }
+
+        .section-title {
+            margin-top: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+            color: #333;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h2>Edit Bill - #<%= bill.getId() %></h2>
+    <h2> Edit Bill - #<%= bill.getId() %></h2>
     <form action="bill?action=update" method="post">
         <input type="hidden" name="billId" value="<%= bill.getId() %>">
 
-        <label>Customer:</label>
-        <select name="customerId" required>
+        <label for="customerId">Select Customer</label>
+        <select name="customerId" id="customerId" required>
+            <option value="">-- Select Customer --</option>
             <%
                 for (Customer c : customers) {
                     String selected = c.getId() == bill.getCustomerId() ? "selected" : "";
             %>
-            <option value="<%= c.getId() %>" <%= selected %>><%= c.getName() %></option>
-            <%
-                }
-            %>
+            <option value="<%= c.getId() %>" <%= selected %>>
+                <%= c.getName() %>
+            </option>
+            <% } %>
         </select>
 
-        <h3>Items</h3>
+        <div class="section-title">Bill Items</div>
         <%
             for (Item item : allItems) {
                 BillItem existing = itemMap.get(item.getId());
@@ -107,17 +146,17 @@
                 double price = existing != null ? existing.getUnitPrice() : item.getUnitPrice();
         %>
         <div class="line-item">
-            <label><%= item.getName() %> - Rs. <%= item.getUnitPrice() %></label>
-            <input type="hidden" name="itemIds[]" value="<%= item.getId() %>">
-            <input type="number" name="quantities[]" placeholder="Qty" min="0" value="<%= qty %>">
-            <input type="hidden" name="unitPrices[]" value="<%= price %>">
-
+            <div class="item-name"><%= item.getName() %> - Rs. <%= item.getUnitPrice() %></div>
+            <div>
+                <input type="hidden" name="itemIds[]" value="<%= item.getId() %>">
+                <input type="number" name="quantities[]" placeholder="Qty" min="0" value="<%= qty %>">
+                <input type="hidden" name="unitPrices[]" value="<%= price %>">
+            </div>
         </div>
-        <%
-            }
-        %>
+        <% } %>
 
-        <button type="submit" class="btn">Update Bill</button>
+        <br>
+        <button type="submit" class="btn"> Update Bill</button>
     </form>
 
     <div class="back">
