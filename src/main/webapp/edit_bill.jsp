@@ -58,7 +58,7 @@
         }
 
         .btn {
-            background-color: #0766ff;
+            background-color: #ffc107;
             color: #333;
             padding: 10px 16px;
             border: none;
@@ -68,7 +68,7 @@
         }
 
         .btn:hover {
-            background-color: #0766ff;
+            background-color: #e0a800;
         }
 
         .back {
@@ -111,7 +111,6 @@
             <input type="hidden" name="itemIds[]" value="<%= item.getId() %>">
             <input type="number" name="quantities[]" placeholder="Qty" min="0" value="<%= qty %>">
             <input type="hidden" name="unitPrices[]" value="<%= price %>">
-
         </div>
         <%
             }
@@ -121,7 +120,7 @@
     </form>
 
     <div class="back">
-        <a href="bill">Back to Bill List</a>
+        <a href="bill">← Back to Bill List</a>
     </div>
 </div>
 </body>

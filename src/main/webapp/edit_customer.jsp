@@ -101,7 +101,7 @@
     </form>
 
     <div class="back-link">
-        <a href="customer">Back to Customer List</a>
+        <a href="list_customer.jsp">← Back to Customer List</a>
     </div>
 </div>
 </body>

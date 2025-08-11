@@ -35,29 +35,19 @@ public class CustomerServlet extends HttpServlet {
             req.setAttribute("customers", customerList);
 
             // Use forward, NOT redirect
-            RequestDispatcher dispatcher = req.getRequestDispatcher("list_customer.jsp");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/list_customer.jsp");
             dispatcher.forward(req, resp);
         }
         else{
-            if(action.equals("add")){
-                req.getRequestDispatcher("add_customer.jsp").forward(req, resp);
-            }
-            else if(action.equals("edit")){
+            if(action.equals("edit")){
                 int id = Integer.parseInt(req.getParameter("id"));
                 Customer customer = customerService.getCustomerById(id);
                 req.setAttribute("customer", customer);
                 req.getRequestDispatcher("edit_customer.jsp").forward(req, resp);
             }
-            else if(action.equals("delete")) {
+            else if(action.equals("delete")){
                 doDelete(req, resp);
                 resp.sendRedirect("customer");
-            } else if (action.equals("search")){
-                    req.getRequestDispatcher("account_detail.jsp").forward(req, resp);
-            } else if (action.equals(("searched"))) {
-                String accountNumber = req.getParameter("accountNumber");
-                Customer customer = customerService.getCustomer(accountNumber);
-                req.setAttribute("customer", customer);
-                req.getRequestDispatcher("account_detail.jsp").forward(req,resp);
             }
         }
     }
@@ -69,24 +59,24 @@ public class CustomerServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String action = req.getParameter("action");
-        if (action != null) {
-            if (action.equals("add")) {
-                String accountNumber = req.getParameter("accountNumber");
-                String name = req.getParameter("name");
-                String address = req.getParameter("address");
-                String telephone = req.getParameter("telephone");
+        if (action == null) {
+            String accountNumber = req.getParameter("accountNumber");
+            String name = req.getParameter("name");
+            String address = req.getParameter("address");
+            String telephone = req.getParameter("telephone");
 
-                Customer customer = new Customer(accountNumber, name, address, telephone);
-                boolean added = customerService.addCustomer(customer);
+            Customer customer = new Customer(accountNumber, name, address, telephone);
+            boolean added = customerService.addCustomer(customer);
 
-                if (added) {
-                    resp.setStatus(HttpServletResponse.SC_CREATED);
-                    resp.getWriter().write("Customer added successfully");
-                    resp.sendRedirect("customer");
-                } else {
-                    resp.sendError(HttpServletResponse.SC_CONFLICT, "Customer already exists");
-                }
-            } else if (action.equals("update")) {
+            if (added) {
+                resp.setStatus(HttpServletResponse.SC_CREATED);
+                resp.getWriter().write("Customer added successfully");
+                resp.sendRedirect(req.getContextPath() + "/list_customer.jsp");
+            } else {
+                resp.sendError(HttpServletResponse.SC_CONFLICT, "Customer already exists");
+            }
+        }else{
+            if(action.equals("update")){
                 doPut(req, resp);
             }
         }

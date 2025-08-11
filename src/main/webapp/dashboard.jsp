@@ -96,9 +96,8 @@
 
   <div class="buttons">
     <!-- Customer Actions -->
-    <a href="customer?action=add">Add Customer</a>
+    <a href="add_customer.jsp">Add Customer</a>
     <a href="customer">View Customers</a>
-
 
     <!-- Item Actions -->
     <a href="item?action=add">Add Item</a>
@@ -107,9 +106,9 @@
     <!-- Billing Actions -->
     <a href="bill?action=create">Create Bill</a>
     <a href="bill">View Bills</a>
-    <a href="customer?action=search">Account Details</a>
-    <a href="help">Help Section</a>
-
+    <a href="bill?action=edit&id=1" class="edit">Edit Bill</a>
+    <a href="bill?action=delete&id=1" class="delete" onclick="return confirm('Are you sure you want to delete this bill?')">Delete Bill</a>
+    <a href="help_section.jsp">Help Section</a>
   </div>
 
   <div class="logout">
