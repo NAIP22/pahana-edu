@@ -53,7 +53,7 @@
         }
 
         .edit-btn {
-            background-color: #0766ff;
+            background-color: #ffc107;
         }
 
         .delete-btn {
@@ -61,7 +61,7 @@
         }
 
         .back-btn {
-            background-color: #6c6f7d;
+            background-color: #6c757d;
             display: inline-block;
             text-align: center;
             margin-top: 10px;
@@ -124,7 +124,7 @@
     </table>
 
     <br/>
-    <a href="dashboard" class="back-btn"> Back to Dashboard</a>
+    <a href="dashboard.jsp" class="back-btn">← Back to Dashboard</a>
 </div>
 </body>
 </html>

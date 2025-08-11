@@ -231,7 +231,7 @@
     </form>
 
     <div class="back">
-        <a href="dashboard">Back to Dashboard</a>
+        <a href="dashboard.jsp">Back to Dashboard</a>
     </div>
 </div>
 </body>

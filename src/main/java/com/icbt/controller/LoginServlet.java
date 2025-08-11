@@ -28,14 +28,15 @@ public class LoginServlet extends HttpServlet {
         if(user!=null){
             HttpSession session = req.getSession();
             session.setAttribute("user",user);
-            resp.sendRedirect("dashboard");
+            resp.sendRedirect(req.getContextPath()+"/dashboard.jsp") ;
+
         }
         else{
-            resp.sendRedirect("login");
+            resp.sendRedirect(req.getContextPath()+"/login.jsp");
         }
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("login.jsp").forward(req,resp);
+        resp.sendRedirect(req.getContextPath()+"/login.jsp");
     }
 }

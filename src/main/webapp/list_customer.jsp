@@ -132,7 +132,7 @@
     </div>
 
     <div class="back-link">
-        <a href="dashboard"> Back to Dashboard</a>
+        <a href="dashboard.jsp"> Back to Dashboard</a>
     </div>
 </div>
 </body>

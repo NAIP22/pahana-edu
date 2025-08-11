@@ -91,7 +91,7 @@
 </head>
 <body>
 <div class="login-card">
-    <h2>Welcome</h2>
+    <h2>Customer Login</h2>
     <form action="login" method="post">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" required />
@@ -102,7 +102,7 @@
         <input type="submit" value="Login" />
     </form>
     <div class="footer">
-        © 2025 PAHANA_EDU
+        © 2025 Your Company Name
     </div>
 </div>
 </body>

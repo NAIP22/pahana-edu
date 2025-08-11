@@ -57,16 +57,17 @@
     <li><strong>Manage Items:</strong> Go to "Items" to add, edit, or delete items. Each item has a price and available stock.</li>
     <li><strong>View Bills:</strong> Use the "Bill List" to view past bills, including customer and item details.</li>
     <li><strong>Print:</strong> Each bill can be printed using the print icon next to the bill record.</li>
+    <li><strong>Stock Updates:</strong> Stock is automatically reduced when a bill is submitted.</li>
   </ul>
 
   <h2>📞 Support</h2>
   <ul>
     <li>Email: support@pahana_edu.com</li>
-    <li>Phone: +94 11 123 4567</li>
+    <li>Phone: +11 77 123 4567</li>
     <li>Office Hours: Mon - Fri, 9:00 AM - 5:00 PM</li>
   </ul>
 
-  <a href="dashboard" class="back-btn">← Back to Dashboard</a>
+  <a href="dashboard.jsp" class="back-btn">← Back to Dashboard</a>
 </div>
 </body>
 </html>
