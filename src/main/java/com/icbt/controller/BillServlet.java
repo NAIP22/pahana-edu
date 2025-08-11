@@ -127,7 +127,11 @@ public class BillServlet extends HttpServlet {
             int billId = billService.createBill(bill);
 
             if (billId > 0) {
-                resp.sendRedirect(req.getContextPath() + "/bill");
+                bill.setId(billId);
+                req.setAttribute("items", itemService.getAllItems());
+                req.setAttribute("customers", customerService.getAllCustomers());
+                req.setAttribute("bill", bill);
+                req.getRequestDispatcher("bill_summary.jsp").forward(req, resp);
             } else {
                 resp.getWriter().write("Failed to create bill.");
             }
