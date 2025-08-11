@@ -158,8 +158,13 @@
 
   <div class="actions">
     <button onclick="window.print()" class="btn print-btn">🖨 Print Bill</button>
+
+    <div class="back">
+      <a href="dashboard">Back to Dashboard</a>
+    </div>
   </div>
-</div>
+</div>  
+
 
 </body>
 </html>

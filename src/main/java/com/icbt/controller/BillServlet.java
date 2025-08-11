@@ -37,6 +37,8 @@ public class BillServlet extends HttpServlet {
         if (action == null) {
             List<Bill> billList = billService.getAllBills();
             req.setAttribute("bills", billList);
+            req.setAttribute("customers", customerService.getAllCustomers());
+            req.setAttribute("items", itemService.getAllItems());
             req.getRequestDispatcher("list_bill.jsp").forward(req, resp);
         }
         else if (action.equals("create")) {
