@@ -18,80 +18,106 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Edit Bill</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: "Segoe UI", Tahoma, sans-serif;
-            background-color: #f9fafc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #f0f2f5, #ffffff);
             margin: 0;
-            padding: 0;
+            padding: 40px 0;
         }
 
         .container {
             max-width: 900px;
-            margin: 40px auto;
+            margin: auto;
             background: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 30px 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            animation: fadeIn 0.8s ease-in-out;
         }
 
         h2 {
             text-align: center;
+            color: #2c3e50;
             margin-bottom: 25px;
-            color: #333;
         }
 
         label {
             font-weight: 600;
-            display: block;
             margin-bottom: 8px;
+            display: block;
             color: #444;
         }
 
         select, input[type="number"] {
             width: 100%;
-            padding: 8px 10px;
+            padding: 10px;
             margin-bottom: 15px;
-            border-radius: 6px;
+            border-radius: 8px;
             border: 1px solid #ccc;
             transition: border-color 0.3s ease;
         }
 
         select:focus, input[type="number"]:focus {
-            border-color: #0766ff;
+            border-color: #007bff;
             outline: none;
         }
 
+        .section-title {
+            margin-top: 25px;
+            font-size: 18px;
+            font-weight: 600;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+            color: #2c3e50;
+        }
+
         .line-item {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 10px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            padding: 12px;
-            background-color: #f6f8fa;
+            background: #f9fafc;
+            padding: 12px 15px;
             border-radius: 8px;
             margin-bottom: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .line-item:hover {
+            background: #e6f0ff;
         }
 
         .item-name {
             font-size: 15px;
             font-weight: 500;
+            color: #333;
         }
 
         .btn {
-            background-color: #0766ff;
-            color: #fff;
+            background-color: #007bff;
+            color: white;
             padding: 10px 18px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 15px;
-            display: inline-block;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .btn i {
+            font-size: 14px;
         }
 
         .btn:hover {
-            background-color: #0556d4;
+            background-color: #0056b3;
+            transform: translateY(-2px);
         }
 
         .back {
@@ -101,27 +127,25 @@
 
         .back a {
             text-decoration: none;
-            color: #0766ff;
-            font-weight: 500;
+            color: #007bff;
+            font-weight: 600;
+            transition: transform 0.2s ease;
         }
 
         .back a:hover {
             text-decoration: underline;
+            transform: translateY(-2px);
         }
 
-        .section-title {
-            margin-top: 25px;
-            font-size: 18px;
-            font-weight: 600;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 5px;
-            color: #333;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h2> Edit Bill - #<%= bill.getId() %></h2>
+    <h2><i class="fas fa-file-invoice"></i> Edit Bill - #<%= bill.getId() %></h2>
     <form action="bill?action=update" method="post">
         <input type="hidden" name="billId" value="<%= bill.getId() %>">
 
@@ -138,7 +162,7 @@
             <% } %>
         </select>
 
-        <div class="section-title">Bill Items</div>
+        <div class="section-title"><i class="fas fa-boxes"></i> Bill Items</div>
         <%
             for (Item item : allItems) {
                 BillItem existing = itemMap.get(item.getId());
@@ -155,12 +179,13 @@
         </div>
         <% } %>
 
-        <br>
-        <button type="submit" class="btn"> Update Bill</button>
+        <div style="text-align:center; margin-top:20px;">
+            <button type="submit" class="btn"><i class="fas fa-save"></i> Update Bill</button>
+        </div>
     </form>
 
     <div class="back">
-        <a href="bill">Back to Bill List</a>
+        <a href="bill"><i class="fas fa-arrow-left"></i> Back to Bill List</a>
     </div>
 </div>
 </body>

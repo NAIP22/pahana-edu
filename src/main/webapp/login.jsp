@@ -1,10 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%
+    String errorMsg = (String) request.getAttribute("error");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Login - Customer Portal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -18,17 +21,17 @@
 
         .login-card {
             background: #fff;
-            padding: 40px;
+            padding: 40px 35px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            width: 320px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+            width: 350px;
             animation: fadeIn 0.6s ease-in-out;
         }
 
         h2 {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             text-align: center;
-            color: #333;
+            color: #0766ff;
         }
 
         label {
@@ -40,7 +43,7 @@
         input[type="text"],
         input[type="password"] {
             width: 100%;
-            padding: 10px;
+            padding: 10px 12px;
             border: 1px solid #ccc;
             border-radius: 6px;
             margin-bottom: 20px;
@@ -50,13 +53,13 @@
 
         input[type="text"]:focus,
         input[type="password"]:focus {
-            border-color: #007bff;
+            border-color: #0766ff;
             outline: none;
         }
 
         input[type="submit"] {
             width: 100%;
-            background-color: #007bff;
+            background-color: #0766ff;
             color: #fff;
             padding: 10px;
             border: none;
@@ -67,7 +70,7 @@
         }
 
         input[type="submit"]:hover {
-            background-color: #0056b3;
+            background-color: #0556d4;
         }
 
         .footer {
@@ -78,29 +81,32 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
+
+    <script>
+        // Show popup if error exists
+        <% if (errorMsg != null) { %>
+        alert("<%= errorMsg.replace("\"", "\\\"") %>");
+        <% } %>
+    </script>
 </head>
 <body>
 <div class="login-card">
-    <h2>Welcome</h2>
+    <h2><i class="fas fa-user-circle"></i> Welcome</h2>
+
     <form action="login" method="post">
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" required />
+        <input type="text" id="username" name="username" placeholder="Enter your username" required />
 
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" required />
+        <input type="password" id="password" name="password" placeholder="Enter your password" required />
 
         <input type="submit" value="Login" />
     </form>
+
     <div class="footer">
         © 2025 PAHANA_EDU
     </div>

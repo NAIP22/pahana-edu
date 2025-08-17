@@ -31,7 +31,9 @@ public class LoginServlet extends HttpServlet {
             resp.sendRedirect("dashboard");
         }
         else{
-            resp.sendRedirect("login");
+            req.setAttribute("error", "Invalid username or password");
+            req.getRequestDispatcher("login.jsp").forward(req, resp);
+
         }
     }
 
