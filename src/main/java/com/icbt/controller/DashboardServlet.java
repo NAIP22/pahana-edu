@@ -15,7 +15,7 @@ public class DashboardServlet extends HttpServlet {
         HttpSession session = req.getSession(false);
 
         if (session == null || session.getAttribute("user") == null) {
-            resp.sendRedirect("login.jsp");
+            resp.sendRedirect("login");
         } else {
             req.getRequestDispatcher("dashboard.jsp").forward(req, resp);
         }

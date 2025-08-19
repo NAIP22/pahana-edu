@@ -2,6 +2,60 @@
 
 All notable changes to this project are documented here.
 
+## [v1.4.2] - 2025-08-17
+
+### ✨ Features
+
+#### 🧾 Bill Management
+- Added **bill summary view** before final submission.
+- Enabled **PDF generation** of bills for printing and sharing.
+- Improved **error handling** during bill creation and editing.
+- Minor **UI enhancements** in bill forms.
+- Added **navigation back buttons** for easier workflow.
+
+#### 👤 Customer Management
+- Implemented **search by account number** functionality.
+- Enhanced **error handling** for customer creation and updates.
+- Minor **UI fixes** to prevent customer addition issues.
+- Added **navigation back buttons** in customer forms.
+
+#### 📦 Item Management
+- Minor **UI improvements** in item forms.
+- Fixed small bugs in stock quantity updates.
+
+#### 🔐 User Management
+- Improved **error messages** for login and placeholder actions.
+- Minor **UI adjustments** in user management pages.
+
+---
+
+### 🐞 Bug Fixes & Minor Changes
+- Fixed **customer not adding** issue in certain cases.
+- Corrected small UI inconsistencies across modules.
+- Added **back navigation buttons** in multiple forms for better UX.
+
+---
+
+### ✅ Testing
+- Updated **JUnit tests** to cover new customer search and error handling scenarios.
+- Retested all CRUD operations to ensure stability.
+
+---
+
+### 💻 UI/UX Enhancements
+- Consistent **navigation and form validation** across modules.
+- Improved **real-time feedback** and error messages in forms.
+- Minor **styling fixes** for bill and customer pages.
+
+---
+
+### 🧭 Next Planned Features
+- 📧 Email notifications to customers
+- 📊 Billing analytics dashboard
+- 🔐 Complete user roles and authentication (Admin, Staff)
+
+---
+
 ## [v1.0.0] - 2025-07-27
 
 ### ✨ Features
