@@ -28,15 +28,16 @@ public class LoginServlet extends HttpServlet {
         if(user!=null){
             HttpSession session = req.getSession();
             session.setAttribute("user",user);
-            resp.sendRedirect(req.getContextPath()+"/dashboard.jsp") ;
-
+            resp.sendRedirect("dashboard");
         }
         else{
-            resp.sendRedirect(req.getContextPath()+"/login.jsp");
+            req.setAttribute("error", "Invalid username or password");
+            req.getRequestDispatcher("login.jsp").forward(req, resp);
+
         }
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect(req.getContextPath()+"/login.jsp");
+        req.getRequestDispatcher("login.jsp").forward(req,resp);
     }
 }
