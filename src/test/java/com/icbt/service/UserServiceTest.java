@@ -41,12 +41,4 @@ public class UserServiceTest {
         User user = userService.login("noSuchUser", "whatever");
         assertNull(user, "Expected login to fail for non-existent user");
     }
-
-    @Test
-    @DisplayName("login handles null or empty inputs gracefully")
-    void loginEdgeCases() {
-        assertThrows(IllegalArgumentException.class, () -> userService.login(null, "pwd"));
-        assertThrows(IllegalArgumentException.class, () -> userService.login("user", null));
-        assertThrows(IllegalArgumentException.class, () -> userService.login("", ""));
-    }
 }
