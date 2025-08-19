@@ -6,46 +6,66 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Create New Bill</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            font-family: Arial;
-            background: #f7f7f7;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ece9e6, #ffffff);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
         }
 
         .container {
+            width: 100%;
             max-width: 800px;
+            background: #ffffff;
             margin: 40px auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px #ccc;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+            animation: fadeIn 0.8s ease-in-out;
         }
 
         h2, h3 {
             text-align: center;
+            color: #2c3e50;
             margin-bottom: 20px;
         }
 
         label {
-            font-weight: bold;
-            display: block;
+            font-weight: 600;
+            color: #444;
             margin-bottom: 6px;
+            display: block;
         }
 
         select, input[type="number"] {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
             border: 1px solid #ccc;
+            font-size: 15px;
+            transition: border 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        select:focus, input[type="number"]:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 6px rgba(0,123,255,0.3);
+            outline: none;
         }
 
         .line-item {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .line-item select,
@@ -56,20 +76,23 @@
         .btn {
             background-color: #007bff;
             color: white;
-            padding: 10px 16px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 15px;
-            margin-top: 10px;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.2s ease;
         }
 
         .btn:hover {
             background-color: #0056b3;
+            transform: translateY(-2px);
         }
 
         .add-btn {
             background-color: #28a745;
+            margin-top: 10px;
         }
 
         .add-btn:hover {
@@ -78,32 +101,47 @@
 
         .remove-btn {
             background-color: #dc3545;
-            padding: 6px 10px;
+            color: #fff;
+            padding: 8px 14px;
             font-size: 14px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
         }
 
         .remove-btn:hover {
             background-color: #c82333;
         }
 
+        #total-container {
+            text-align: right;
+            font-weight: bold;
+            margin-top: 25px;
+            font-size: 18px;
+            color: #2c3e50;
+        }
+
         .back {
-            margin-top: 20px;
+            margin-top: 30px;
             text-align: center;
         }
 
         .back a {
             text-decoration: none;
-            color: #555;
+            color: #007bff;
+            font-weight: 600;
+            transition: color 0.3s ease;
         }
 
         .back a:hover {
+            color: #0056b3;
             text-decoration: underline;
         }
 
-        #total-container {
-            text-align: right;
-            font-weight: bold;
-            margin-top: 20px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 
@@ -194,9 +232,9 @@
 
 <body>
 <div class="container">
-    <h2>Create New Bill</h2>
+    <h2><i class="fas fa-file-invoice-dollar"></i> Create New Bill</h2>
     <form action="bill" method="post">
-        <label for="customerId">Select Customer:</label>
+        <label for="customerId"><i class="fas fa-user"></i> Select Customer:</label>
         <select name="customerId" required>
             <option value="">-- Select --</option>
             <% for (Customer c : customers) { %>
@@ -204,7 +242,7 @@
             <% } %>
         </select>
 
-        <h3>Bill Items</h3>
+        <h3><i class="fas fa-boxes"></i> Bill Items</h3>
         <div id="item-container">
             <div class="line-item">
                 <select name="itemIds[]" required>
@@ -220,18 +258,18 @@
             </div>
         </div>
 
-        <button type="button" class="btn add-btn" onclick="addItem()">+ Add Item</button>
+        <button type="button" class="btn add-btn" onclick="addItem()"><i class="fas fa-plus-circle"></i> Add Item</button>
 
         <div id="total-container">
             Total: Rs. <span id="totalAmount">0.00</span>
         </div>
 
         <br/>
-        <button type="submit" class="btn">Submit Bill</button>
+        <button type="submit" class="btn"><i class="fas fa-check-circle"></i> Submit Bill</button>
     </form>
 
     <div class="back">
-        <a href="dashboard.jsp">Back to Dashboard</a>
+        <a href="dashboard"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
     </div>
 </div>
 </body>
